@@ -1,7 +1,7 @@
-const forceUtils = require('../lib/forceUtils.js');
 const X2JS = require('x2js');
 const jf = require('jsonfile');
 const xf = require('xml-formatter');
+const forceUtils = require('../lib/forceUtils.js');
 
 (function () {
   'use strict';
@@ -56,7 +56,7 @@ const xf = require('xml-formatter');
     ],
     run(context) {
 
-      const username = context.flags.username;
+      const username = context.flags.username || false;
       const configFile = context.flags.config || false;
       let apiVersion;
       let quickFilters;
