@@ -3,6 +3,12 @@ const jf = require('jsonfile');
 const xf = require('xml-formatter');
 const forceUtils = require('../lib/forceUtils.js');
 
+Array.prototype.pushUniqueValue = function (element) {
+  if (!this.includes(element)) {
+    this.push(element);
+  }
+};
+
 (function () {
   'use strict';
 
@@ -159,7 +165,7 @@ const forceUtils = require('../lib/forceUtils.js');
                 if (!FlowDescriptionPromises[records.DeveloperName]) {
                   FlowDescriptionPromises[records.DeveloperName] = [];
                 }
-                FlowDescriptionPromises[records.DeveloperName].push(records.ActiveVersion.VersionNumber);
+                FlowDescriptionPromises[records.DeveloperName].pushUniqueValue(records.ActiveVersion.VersionNumber);
               }
             });
             return FlowDescriptionPromises;
@@ -187,7 +193,7 @@ const forceUtils = require('../lib/forceUtils.js');
                           if (!packageTypes[x]) {
                             packageTypes[x] = [];
                           }
-                          packageTypes[x].push(metadataEntries.fullName);
+                          packageTypes[x].pushUniqueValue(metadataEntries.fullName);
                         } else {
 
                           if (!packageTypes[metadataEntries.type]) {
@@ -197,13 +203,13 @@ const forceUtils = require('../lib/forceUtils.js');
                           if (metadataEntries.type === 'Flow') {
 
                             if (activeFlowVersions[metadataEntries.fullName]) {
-                              packageTypes[metadataEntries.type].push(`${metadataEntries.fullName}-${activeFlowVersions[metadataEntries.fullName]}`);
+                              packageTypes[metadataEntries.type].pushUniqueValue(`${metadataEntries.fullName}-${activeFlowVersions[metadataEntries.fullName]}`);
                             } else {
-                              packageTypes[metadataEntries.type].push(metadataEntries.fullName);
+                              packageTypes[metadataEntries.type].pushUniqueValue(metadataEntries.fullName);
                             }
 
                           } else {
-                            packageTypes[metadataEntries.type].push(metadataEntries.fullName);
+                            packageTypes[metadataEntries.type].pushUniqueValue(metadataEntries.fullName);
                           }
 
                         }
@@ -235,7 +241,7 @@ const forceUtils = require('../lib/forceUtils.js');
                         if (!packageTypes[metadataEntries.type]) {
                           packageTypes[metadataEntries.type] = [];
                         }
-                        packageTypes[metadataEntries.type].push(metadataEntries.fullName);
+                        packageTypes[metadataEntries.type].pushUniqueValue(metadataEntries.fullName);
                       }
                     } else {
                       console.error('No metadataEntry available');
